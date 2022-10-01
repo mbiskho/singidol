@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Detail Idol</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<body>
+
+    <div class="container container-fluid px-2 d-flex flex-column" style="margin-top: 50px;">
+        <h3 class="font-weight-bold" th:text="'Detail Idol ' + ${idol.namaIdol}"></h3>
+
+        <div class=" d-flex flex-column">
+            <table class="table w-50 borderless my-3">
+                <tr style="margin: 0px;">
+                    <td style="border: none; width: 250px;">Nama Idol</td>
+                    <td style="border: none;" th:text="': ' + ${idol.namaIdol}"></td>
+                </tr>
+
+                <tr>
+                    <td style="border: none;">Asal Negara</td>
+                    <td style="border: none;" th:text="': ' + ${idol.asalNegara}"></td>
+                </tr>
+
+                <tr>
+                    <td style="border: none;">Jumlah Anggota</td>
+                    <td style="border: none;" th:text="': ' + ${idol.jumlahAnggota}"></td>
+                </tr>
+
+                <tr>
+                    <td style="border: none;">Tanggal Debut</td>
+                    <td style="border: none;" th:text="': ' + ${idol.tanggalDebut}"></td>
+                </tr>
+            </table>
+        </div>
+
+        <a type="button" class="btn btn-primary mt-3 mb-4 text-white" style="width:100px;" th:href="@{/idol}">Back</a>
+    </div>
+</body>
+</html>
