@@ -7,7 +7,6 @@ import apap.singidol.model.KonserModel;
 
 public interface KonserService {
     List<KonserModel> findAllKonser();
-    // KonserModel findById(Long id);
+    KonserModel findById(Long id);
     KonserModel saveKonser(KonserModel konser);
-    // KonserModel deleteKonserById(Long id);
 }

@@ -20,6 +20,12 @@ public class KonserServiceImpl implements KonserService {
     }
 
     @Override
+    public KonserModel findById(Long id){
+        KonserModel konser = konserRepository.getReferenceById(id);
+        return konser;
+    }
+
+    @Override
     public KonserModel saveKonser(KonserModel konser){
         KonserModel savedKonser = konserRepository.save(konser);
         return savedKonser;

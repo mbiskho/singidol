@@ -36,7 +36,7 @@ public class IdolController {
     ){  
         IdolModel idol = new IdolModel();
         ctx.addAttribute("idol", idol);
-        return "/idol/form-add";
+        return "/idol/add-form";
     }
 
 
@@ -47,11 +47,11 @@ public class IdolController {
     ){
         IdolModel savedIdol = idolService.saveIdol(idol);
         if(savedIdol == null){
-            return "error-add";
+            return "add-error";
         }
 
         ctx.addAttribute("namaIdol", idol.getNamaIdol());
-        return "/idol/add";
+        return "/idol/add-submit";
     }
 
 

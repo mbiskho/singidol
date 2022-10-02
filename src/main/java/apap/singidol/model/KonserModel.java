@@ -28,7 +28,6 @@ import lombok.Setter;
 
 
 @Entity 
-@NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
@@ -45,7 +44,8 @@ public class KonserModel {
 
     @Column(name="waktu")
     @NotNull
-    private LocalDate waktu;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime waktu;
 
     @Column(name="total_pendapatan")
     @NotNull
@@ -60,4 +60,19 @@ public class KonserModel {
     @OneToMany(mappedBy = "konser")
     List<PenampilanKonserModel> konserIdol;
 
+
+    public KonserModel() {
+        this.namaKonser = "";
+        this.waktu = LocalDateTime.now();
+        this.totalPendapatan =  Long.valueOf(0);
+        this.tempat = "";
+    }
+
+    public String parsingWaktu(){
+        LocalDateTime waktuKonser = this.waktu;
+        String waktuParse = waktuKonser.getDayOfMonth() + " " + waktuKonser.getMonth() + " " + waktuKonser.getYear()+", " + waktuKonser.getHour()+"."+waktuKonser.getMinute();
+        return waktuParse;
+    }
+
+        
 }
