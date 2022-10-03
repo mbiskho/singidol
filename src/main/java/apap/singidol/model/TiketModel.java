@@ -30,7 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name="tiket")
-public class TicketModel {
+public class TiketModel {
     
     @Id @NotNull
     @Column(name="tiket_id", nullable = true)
@@ -44,12 +44,12 @@ public class TicketModel {
 
     @NotNull
     @Column(name="tanggal_pembelian", nullable = true)
-    private LocalDate  tanggalPembelian;
+    private LocalDateTime  tanggalPembelian;
 
 
-    @Column(name="nama_pembelian", nullable = true)
+    @Column(name="nama_lengkap", nullable = true)
     @Size(max = 255) @NotNull
-    private String namaPembelian;
+    private String namaLengkap;
 
     @Column(name="tanggal_lahir", nullable = true)
     @NotNull
@@ -66,5 +66,26 @@ public class TicketModel {
     @ManyToOne
     @JoinColumn(name="tipe_id")
     TipeModel tipe;
+
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", nomorTiket='" + getNomorTiket() + "'" +
+            ", tanggalPembelian='" + getTanggalPembelian() + "'" +
+            ", namaLengkap='" + getNamaLengkap() + "'" +
+            ", tanggalLahir='" + getTanggalLahir() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", konser='" + getKonser() + "'" +
+            ", tipe='" + getTipe() + "'" +
+            "}";
+    }
+
+    public String parsingTanggalPembelian(){
+        LocalDateTime tanggalPembelian = this.tanggalPembelian;
+        String tanggalPembelianParse = tanggalPembelian.getDayOfMonth() + " " + tanggalPembelian.getMonth() + " " + tanggalPembelian.getYear();
+        return tanggalPembelianParse;
+    }
 
 }

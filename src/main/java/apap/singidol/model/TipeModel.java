@@ -43,5 +43,17 @@ public class TipeModel {
     private String deskripsiTipe;
 
     @OneToMany(mappedBy = "tipe")
-    List<TicketModel> tiket;
+    List<TiketModel> tiket;
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", harga='" + getHarga() + "'" +
+            ", nama='" + getNama() + "'" +
+            ", deskripsiTipe='" + getDeskripsiTipe() + "'" +
+            "}";
+    }
 }
+
+   

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>List Tiket</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<body>
+
+    <div class="container container-fluid px-2 d-flex flex-column" style="margin-top: 50px;">
+        <h2>Daftar Tiket</h2>
+      
+        <a type="button" class="btn btn-primary w-25 mt-3 mb-4 text-white" th:href="@{/konser/tambah}" >+ Pesan Tiket</a>
+
+        <table class="table">
+            <thead class="bg-primary text-white">
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">No Tiket</th>
+                <th scope="col">Konser</th>
+                <th scope="col">Tipe Tiket</th>
+                <th scope="col" class="text-center">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="tiket, iteration : ${listTiket}">
+                <td th:text="${iteration.count}"></td>
+                <td style="width: 300px;" th:text="${tiket.nomorTiket}"></td>
+                <td style="width: 300px;" th:text="${tiket.konser.namaKonser}"></td>
+                <td style="width: 180px;" th:text="${tiket.tipe.nama}"></td>
+                <td style="width: 300px;" class="d-flex justify-content-center">
+                    <a type="button" class="btn btn-info btn-md text-white" style="margin-right: 20px;" th:href="@{/tiket/detail/} + ${tiket.id}">Detail</a>
+                    <a type="button" class="btn btn-danger btn-md text-white" style="margin: 0px;" th:href="@{/tiket/delete/} + ${tiket.id}">Hapus</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</body>
+</html>

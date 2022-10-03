@@ -55,7 +55,7 @@ public class KonserModel {
     private String tempat;
 
     @OneToMany(mappedBy = "konser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<TicketModel> tiket;
+    private List<TiketModel> tiket;
 
     @OneToMany(mappedBy = "konser")
     List<PenampilanKonserModel> konserIdol;
@@ -74,5 +74,16 @@ public class KonserModel {
         return waktuParse;
     }
 
-        
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", namaKonser='" + getNamaKonser() + "'" +
+            ", waktu='" + getWaktu() + "'" +
+            ", totalPendapatan='" + getTotalPendapatan() + "'" +
+            ", tempat='" + getTempat() + "'" +
+            "}";
+    }
+    
 }
