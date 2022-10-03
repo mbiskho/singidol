@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Add Tiket</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<body>
+
+    <div class="container container-fluid px-2 d-flex flex-column" style="margin-top: 50px;">
+        <p
+            style="font-weight: 700; font-size: 30px;"
+        >Pesan Tiket</p>
+
+
+
+        <form th:action="@{/tiket/tambah}" th:object="${tiket}" method="POST">
+            <p style="margin-bottom: 5px; font-weight: 500;">Konser</p>
+                <select th:field="*{konser.id}" style="width: 300px; height: 30px; margin-bottom: 25px;">
+                    <option
+                        th:each="existingKonser : ${listKonser}"
+                        th:value="${existingKonser.id}"
+                        th:text="${existingKonser.namaKonser}"
+                    ></option>
+                </select>
+            <br />
+
+
+            <p style="margin-bottom: 5px; font-weight: 500;">Nama Pemesan</p>
+                <input style="width: 300px; margin-bottom: 25px;"  type="text" required  th:field="*{namaLengkap}" />
+            <br/>
+
+
+            <p style="margin-bottom: 5px; font-weight: 500;">Tanggal Lahir</p>
+            <input style="width: 300px; margin-bottom: 20px;"  type="datetime-local" required th:field="*{tanggalLahir}"/>
+            <br/>
+
+            <p style="margin-bottom: 5px; font-weight: 500;">Email</p>
+                <input style="width: 300px; margin-bottom: 20px;"  type="text" required  th:field="*{email}" />
+            <br/>
+
+            <p style="margin-bottom: 5px; font-weight: 500;">Tipe Tiket</p>
+                <select th:field="*{tipe.id}" style="width: 300px; height: 30px; margin-bottom: 25px;">
+                    <option
+                        th:each="existingTipe : ${listTipe}"
+                        th:value="${existingTipe.id}"
+                        th:text="${existingTipe.nama}"
+                    ></option>
+                </select>
+            <br />
+    
+
+
+            <button class="btn btn-primary mt-4" type="submit" name="save">Submit</button>
+            <a class="btn btn-secondary mt-4 mx-2" href="/tiket">Batal</a>
+        </form>
+
+
+    </div>
+</body>
+</html>

@@ -31,5 +31,13 @@ public class KonserServiceImpl implements KonserService {
         return savedKonser;
     }
 
+    @Override
+    public void updatePendapatan(
+        Long pendapatan,
+        Long idKonser
+    ){
+        konserRepository.updatePendapatanKonser(pendapatan, idKonser);
+    }
+
 
 }

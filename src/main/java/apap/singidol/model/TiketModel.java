@@ -27,7 +27,6 @@ import lombok.Setter;
 @Setter
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name="tiket")
 public class TiketModel {
@@ -38,11 +37,12 @@ public class TiketModel {
     private Long id;
 
     
-    @Column(name="nomor_tiket", nullable = true)
+    @Column(name="nomor_tiket", nullable = true, unique = true)
     @Size(max = 255) @NotNull
     private String nomorTiket;
 
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name="tanggal_pembelian", nullable = true)
     private LocalDateTime  tanggalPembelian;
 
@@ -53,7 +53,8 @@ public class TiketModel {
 
     @Column(name="tanggal_lahir", nullable = true)
     @NotNull
-    private LocalDate tanggalLahir;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime tanggalLahir;
 
     @Column(name="email", nullable = true) @NotNull
     @Size(max = 255)
@@ -66,6 +67,16 @@ public class TiketModel {
     @ManyToOne
     @JoinColumn(name="tipe_id")
     TipeModel tipe;
+
+
+
+    public TiketModel() {
+        this.nomorTiket = "";
+        this.tanggalLahir = LocalDateTime.now();
+        this.tanggalPembelian = LocalDateTime.now();
+        this.namaLengkap = "";
+        this.email = "";
+    }
 
 
     @Override
@@ -81,6 +92,27 @@ public class TiketModel {
             ", tipe='" + getTipe() + "'" +
             "}";
     }
+
+    private Integer tanggalToNumber(LocalDateTime A){
+        Integer ans = A.getDayOfMonth() * 10000 + A.getMonthValue();
+        return ans; 
+    }
+
+    public void generateNomorTiket(){
+
+        String firstSuffix = ((this.namaLengkap + "   ").substring(0, 3)).toUpperCase();
+
+        Integer secondSuffix = tanggalToNumber(tanggalLahir) + tanggalToNumber(tanggalPembelian); 
+
+        String thirdSuffix = "";
+
+        String fourSuffix = this.getTipe().getNama().toUpperCase();
+
+        String ans = firstSuffix + secondSuffix + thirdSuffix + fourSuffix;
+
+        this.nomorTiket = ans;
+    }
+    
 
     public String parsingTanggalPembelian(){
         LocalDateTime tanggalPembelian = this.tanggalPembelian;

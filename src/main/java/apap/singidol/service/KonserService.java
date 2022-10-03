@@ -9,4 +9,5 @@ public interface KonserService {
     List<KonserModel> findAllKonser();
     KonserModel findById(Long id);
     KonserModel saveKonser(KonserModel konser);
+    void updatePendapatan(Long pendapatan, Long idKonser);
 }

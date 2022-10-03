@@ -11,5 +11,6 @@ public class BaseController {
         Model ctx
     ){
         return "/home/index";
+
     }
 }

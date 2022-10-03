@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 
 import apap.singidol.service.KonserService;
 import apap.singidol.service.TiketService;
+import apap.singidol.service.TipeService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -40,6 +41,9 @@ public class TiketController {
     @Autowired
     KonserService konserService;
 
+    @Autowired
+    TipeService tipeService;
+
     @RequestMapping("/tiket")
     public String viewAllTiket(
         Model ctx
@@ -55,18 +59,19 @@ public class TiketController {
         Model ctx
     ){  
 
-        // Defining Penampilan
-        List<PenampilanKonserModel> listKonserPenampilan = new ArrayList<>();
-        listKonserPenampilan.add(new PenampilanKonserModel());
-
         // Defining Konser
-        KonserModel konser = new KonserModel();
-        konser.setKonserIdol(listKonserPenampilan);
-        ctx.addAttribute("konser", konser);
+        List<KonserModel> listKonser = konserService.findAllKonser();
+        ctx.addAttribute("listKonser", listKonser);
 
-        // Giving List of All Idol
-        // List<IdolModel> listIdol = idolService.findAllIdol();
-        // ctx.addAttribute("listIdol", listIdol);
+        System.out.println(listKonser.size());
+
+        // Defining Tipe
+        List<TipeModel> listTipe  = tipeService.findAllTipe();
+        ctx.addAttribute("listTipe", listTipe);
+
+        // Defining new Tiket
+        TiketModel tiket = new TiketModel();
+        ctx.addAttribute("tiket", tiket);
 
         return "/tiket/add-form";
     }
@@ -75,23 +80,41 @@ public class TiketController {
 
     @PostMapping(value = "/tiket/tambah", params={"save"})
     public String addTiketSubmit(
-        @ModelAttribute KonserModel konser,
+        @ModelAttribute TiketModel tiket,
         Model ctx
     ){  
 
-        List<PenampilanKonserModel> listPenampilan = konser.getKonserIdol();
 
-        // konser.setKonserIdol(null);
+        System.out.println(tiket);
 
-        // KonserModel savedKonser = konserService.saveKonser(konser);
+    
+        TipeModel tipe  = tipeService.findTipeById(tiket.getTipe().getId());
+        KonserModel konser = konserService.findById(tiket.getKonser().getId());
 
-        // penampilanService.addIdolToKonser(konser, listPenampilan);
 
-        // if(savedKonser == null){
-        //     return "/konser/add-error";
-        // }
+        // Assigning to object to tiket
+        tiket.setTipe(tipe);
+        tiket.setKonser(konser);
+
         
-        // ctx.addAttribute("namaKonser", savedKonser.getNamaKonser());
+        // Generating nomor tiket
+        tiket.generateNomorTiket();
+
+
+        // Updating Konser Pendapatan
+        Long currentPendapatan = konser.getTotalPendapatan() + tipe.getHarga();
+        konserService.updatePendapatan(currentPendapatan, konser.getId());
+
+
+        System.out.println(tiket);
+
+        TiketModel savedTiket = tiketService.saveTiket(tiket);
+
+        if(savedTiket == null){
+            return "/tiket/add-error";
+        }
+
+        ctx.addAttribute("nomorTiket", tiket.getNomorTiket());
         return "/tiket/add-submit";
     }
 
@@ -103,8 +126,15 @@ public class TiketController {
     ){
         TiketModel tiket = tiketService.findTiketById(Long.parseLong(idTiket));
         KonserModel konser = tiket.getKonser();
+        TipeModel tipe = tiket.getTipe();
 
-        tiketService.deleteTiket(tiket);
+        // Recalculate Pendapatan
+        Long adjustedPendapatan = konser.getTotalPendapatan() - tipe.getHarga();
+        System.out.println(konser.getTotalPendapatan());
+        System.out.println(adjustedPendapatan);
+        konserService.updatePendapatan(adjustedPendapatan, konser.getId());
+
+        tiketService.deleteTiketById(tiket.getId());
 
         ctx.addAttribute("tiket", tiket);
         ctx.addAttribute("konser", konser);
