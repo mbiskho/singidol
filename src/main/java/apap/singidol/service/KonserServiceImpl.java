@@ -39,5 +39,11 @@ public class KonserServiceImpl implements KonserService {
         konserRepository.updatePendapatanKonser(pendapatan, idKonser);
     }
 
+    @Override
+    public void updateKonser(KonserModel konser){
+        konserRepository.updateNamaKonser(konser.getNamaKonser(), konser.getId());
+        konserRepository.updateTempatKonser(konser.getTempat(), konser.getId());
+        konserRepository.updateWaktuKonser(konser.getWaktu(), konser.getId());
+    }
 
 }

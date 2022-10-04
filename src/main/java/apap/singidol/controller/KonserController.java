@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -129,8 +130,6 @@ public class KonserController {
     }
 
   
-
-    
     @RequestMapping("/konser/detail/{idKonser}")
     public String detailKonser(
         @PathVariable(value = "idKonser") String idKonser,
@@ -139,16 +138,101 @@ public class KonserController {
         KonserModel konser = konserService.findById(Long.parseLong(idKonser));
         
         List<PenampilanKonserDto> penampilanKonser = penampilanService.findKonserIdols(konser.getId());
-
-
-        for(PenampilanKonserDto x : penampilanKonser){
-            System.out.println(x);
-        }        
-
+ 
         ctx.addAttribute("konser", konser);
         ctx.addAttribute("waktu", konser.parsingWaktu());
         ctx.addAttribute("penampilanKonser", penampilanKonser);
         return "/konser/detail";
+    }
+
+
+    @GetMapping("/konser/ubah/{idKonser}")
+    public String ubahKonserForm(
+        @PathVariable(value = "idKonser") String idKonser,
+        Model ctx
+    ){
+        KonserModel konser = konserService.findById(Long.parseLong(idKonser));
+
+        ctx.addAttribute("konser", konser);
+        ctx.addAttribute("idKonser", idKonser);
+
+        // Defining Penampilan
+        List<PenampilanKonserModel> listKonserPenampilan = penampilanService.findPenampilanBelongToKonser(Long.parseLong(idKonser));
+        konser.setKonserIdol(listKonserPenampilan);
+
+        // Giving List of All Idol
+        List<IdolModel> listIdol = idolService.findAllIdol();
+        ctx.addAttribute("listIdol", listIdol);
+
+        return "/konser/update-form";
+    }
+
+
+    @PostMapping(value = "/konser/ubah/{idKonser}", params={"addRowIdol"})
+    public String addUpdateRowIdol(
+        @ModelAttribute KonserModel konser,
+        Model ctx
+    ){
+        if(konser.getKonserIdol() == null || konser.getKonserIdol().size() == 0){
+            konser.setKonserIdol(new ArrayList<>());
+        }
+
+        // Giving List of All Idol
+        List<IdolModel> listIdol = idolService.findAllIdol();
+        ctx.addAttribute("listIdol", listIdol);
+
+        PenampilanKonserModel newPenampilan = new PenampilanKonserModel();
+
+        konser.getKonserIdol().add(newPenampilan);
+
+        ctx.addAttribute("konser", konser);
+
+        return "/konser/add-form";
+    }
+
+    @PostMapping(value = "/konser/ubah/{idKonser}", params = {"deleteRowIdol"})
+    public String deleteUpdateRowIdol(
+        @ModelAttribute KonserModel konser,
+        @RequestParam("deleteRowIdol") Integer row,
+        Model ctx
+    ){  
+        final Integer rowId = Integer.valueOf(row);
+        konser.getKonserIdol().remove(rowId.intValue());
+        ctx.addAttribute("konser", konser);
+
+        // Giving List of All Idol
+        List<IdolModel> listIdol = idolService.findAllIdol();
+        ctx.addAttribute("listIdol", listIdol);
+        return "/konser/add-form";
+    }
+
+
+    @PostMapping(value = "/konser/ubah/{idKonser}", params={"save"})
+    public String ubahKonserSubmit(
+        @PathVariable(value = "idKonser") String idKonser,
+        @ModelAttribute KonserModel konser,
+        Model ctx
+    ){      
+        System.out.println(konser.getKonserIdol().toString());
+
+        Long konserId = Long.parseLong(idKonser);
+        
+        konser.setId(konserId);
+
+        // Updating Konser attributes
+        konserService.updateKonser(konser);
+
+        KonserModel previousKonser = konserService.findById(konserId);
+
+        // Updating Penampilan
+        List<PenampilanKonserModel> listPenampilan = konser.getKonserIdol();
+        
+        penampilanService.deleteIdolFromKonser(konserId);
+
+        penampilanService.addIdolToKonser(previousKonser, listPenampilan);
+
+        ctx.addAttribute("namaKonser", konser.getNamaKonser());
+        return "/konser/update-submit";
     }
     
 }

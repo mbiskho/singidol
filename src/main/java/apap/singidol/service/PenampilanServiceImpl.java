@@ -77,7 +77,24 @@ public class PenampilanServiceImpl implements PenampilanService{
         return penampilanKonserList;
     }
 
+    @Override
+    public List<PenampilanKonserModel> findPenampilanBelongToKonser(Long idKonser){
+        List<PenampilanKonserModel> listPenampilan = new ArrayList<>();
 
+        for(PenampilanKonserModel penampilan : penampilanKonserRepository.findAll()){
+            if(penampilan.getIdKonser() == idKonser){
+                listPenampilan.add(penampilan);
+            }
+        }
+
+        return listPenampilan;
+    }
+
+
+    @Override
+    public void deleteIdolFromKonser(Long idKonser){
+        penampilanKonserRepository.deleteKonserIdol(idKonser);
+    }
     
     public void savePenampilan(PenampilanKonserModel penampilan){
         penampilanKonserRepository.save(penampilan);

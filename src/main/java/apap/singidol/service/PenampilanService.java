@@ -10,5 +10,6 @@ import apap.singidol.model.PenampilanKonserModel;
 public interface PenampilanService {
     boolean addIdolToKonser(KonserModel konser,  List<PenampilanKonserModel> konserIdol);
     List<PenampilanKonserDto> findKonserIdols(Long idKonser);
-    // void deleteIdolFromKonser();   
+    List<PenampilanKonserModel> findPenampilanBelongToKonser(Long idKonser);
+    void deleteIdolFromKonser(Long idKonser);   
 }

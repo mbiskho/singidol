@@ -8,11 +8,11 @@
 
     <div class="container container-fluid px-2 d-flex flex-column" style="margin-top: 50px;">
         
-        <div class="container container-fluid d-flex">
+        <div class="container d-flex">
             <p
                 style="font-size: 30px; font-weight: 700; margin-right: 5px;"
             >
-            Tiket dengan nama
+            Tiket dengan nomor
             </p>
 
             <p
@@ -27,8 +27,28 @@
             >
             berhasil ditambahkan
             </p>
+        </div>
 
-            
+
+        <div class="container d-flex">
+            <p
+                style="font-size: 30px; font-weight: 700; margin-right: 5px;"
+            >
+            Pendapatan konser 
+            </p>
+
+            <p
+                th:text="' ' + ${namaKonser} + ' '" 
+                style="font-size: 30px; font-weight: 700; margin-right: 5px;"
+                class="text-info"
+            >
+            </p>
+
+            <p
+                style="font-size: 30px; font-weight: 700; margin-right: 5px;"
+            >
+            bertambah
+            </p>
         </div>
         <a class="btn btn-secondary mt-4 mx-2 w-25" href="/tiket">Kembali</a>
         

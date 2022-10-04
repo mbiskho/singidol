@@ -1,5 +1,7 @@
 package apap.singidol.repository;
 
+import java.time.LocalDateTime;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,4 +27,41 @@ public interface KonserRepository extends JpaRepository<KonserModel, Long> {
         @Param("pendapatan") Long pendapatan,
         @Param("idKonser") Long idKonser
     );
+
+
+
+    @Modifying
+    @Transactional
+    @Query(
+        value = "UPDATE konser SET nama_konser = :namaKonser WHERE konser_id = :idKonser ;",
+        nativeQuery = true
+    )
+    public void updateNamaKonser(
+        @Param("namaKonser") String namaKonser,
+        @Param("idKonser") Long idKonser
+    );
+
+
+    @Modifying
+    @Transactional
+    @Query(
+        value = "UPDATE konser SET tempat = :tempat WHERE konser_id = :idKonser ;",
+        nativeQuery = true
+    )
+    public void updateTempatKonser(
+        @Param("tempat") String tempat,
+        @Param("idKonser") Long idKonser
+    );
+
+    @Modifying
+    @Transactional
+    @Query(
+        value = "UPDATE konser SET waktu = :waktu WHERE konser_id = :idKonser ;",
+        nativeQuery = true
+    )
+    public void updateWaktuKonser(
+        @Param("waktu") LocalDateTime waktu,
+        @Param("idKonser") Long idKonser
+    );
+
 }

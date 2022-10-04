@@ -115,6 +115,7 @@ public class TiketController {
         }
 
         ctx.addAttribute("nomorTiket", tiket.getNomorTiket());
+        ctx.addAttribute("namaKonser", konser.getNamaKonser());
         return "/tiket/add-submit";
     }
 
