@@ -6,11 +6,14 @@
 
 <body>
 
+  <nav th:replace="fragments/fragment :: navbar(page='konser')"></nav>
     <div class="container container-fluid px-2 d-flex flex-column" style="margin-top: 50px;">
         <h2>Daftar Konser</h2>
-      
-        <a type="button" class="btn btn-primary w-25 mt-3 mb-4 text-white" th:href="@{/konser/tambah}" >+ Tambah Konser</a>
 
+        <div class="d-flex justify-content-between">
+          <a type="button" class="btn btn-primary w-25 mt-3 mb-4 text-white" th:href="@{/konser/tambah}" >+ Tambah Konser</a>
+          <a type="button" class="btn btn-primary w-25 mt-3 mb-4 text-white" th:href="@{/konser/cari}" >Cari Konser</a>
+        </div>
         <table class="table">
             <thead class="bg-primary text-white">
               <tr>
@@ -24,7 +27,7 @@
               <tr th:each="konser, iteration : ${listKonser}">
                 <td th:text="${iteration.count}"></td>
                 <td th:text="${konser.namaKonser}"></td>
-                <td style="width: 350px;" th:text="${konser.totalPendapatan}"></td>
+                <td style="width: 350px;" th:text="${konser.formatCurrency(konser.totalPendapatan)}"></td>
                 <td style="width: 300px;">
                     <a type="button" class="btn btn-primary btn-md text-white" style="margin: 0px;" th:href="@{/konser/detail/} + ${konser.id}">Detail</a>
                 </td>

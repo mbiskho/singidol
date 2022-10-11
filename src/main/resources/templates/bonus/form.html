@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Bonus</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<body>
+
+
+    <nav th:replace="fragments/fragment :: navbar(page='bonus')"></nav>
+    <div class="container container-fluid px-2 d-flex flex-column" style="margin-top: 50px;">
+
+        <div class="container d-flex justify-content-center">
+            <p style="font-weight: 700; font-size: 30px;">Top Konser</p>
+        </div>
+
+        <form th:action="@{/bonus}" th:object="${topSearchDto}" method="POST">
+            <div class="d-flex">
+                <div class="container d-flex justify-content-center">
+                    <select th:field="*{namaTipe}" style="width:400px; height: 35px;"
+                    onchange="if(this.value != 0) { this.form.submit(); }"
+                    >   
+                        <option value="1" > Select Tipe</option>
+                        <option 
+                            th:each="tipe : ${listTipe}"
+                            th:value="${tipe.nama}" 
+                            th:text="${tipe.nama}"
+                             ></option>
+                    </select>
+                </div>
+            </div>
+            <br/>
+        </form>
+    </div>
+
+</body>
+</html>

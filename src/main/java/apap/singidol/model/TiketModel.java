@@ -2,6 +2,7 @@ package apap.singidol.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 import javax.annotation.Generated;
 import javax.persistence.Column;
@@ -98,17 +99,36 @@ public class TiketModel {
         return ans; 
     }
 
-    public void generateNomorTiket(){
+    private String transformChar(String str) {
+        str = str.toUpperCase();
+        char first = str.charAt(0);  
+        int subtraction = first - 'A';
+        String ans = "";
 
+        if(subtraction / 10 == 0){
+            ans += "0";
+        }
+
+        ans += subtraction;
+        return ans;
+    }
+
+    public void generateNomorTiket(){
+        
         String firstSuffix = ((this.namaLengkap + "   ").substring(0, 3)).toUpperCase();
 
         Integer secondSuffix = tanggalToNumber(tanggalLahir) + tanggalToNumber(tanggalPembelian); 
 
-        String thirdSuffix = "";
+        String thirdSuffix = transformChar(this.namaLengkap);
 
         String fourSuffix = this.getTipe().getNama().toUpperCase();
 
-        String ans = firstSuffix + secondSuffix + thirdSuffix + fourSuffix;
+        Random r = new Random();
+        char c = (char)(r.nextInt(26) + 'A');
+
+        String fiveSuffix = Character.toString(c);
+
+        String ans = firstSuffix + secondSuffix + thirdSuffix + fourSuffix + fiveSuffix;
 
         this.nomorTiket = ans;
     }

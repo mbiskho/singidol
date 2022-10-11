@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class PenampilanKonserModel {
     @Id
@@ -20,8 +22,8 @@ public class PenampilanKonserModel {
     public Long idKonser;
     public Long idIdol;
 
-
     @Column(name="jamMulaiTampil")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime jamMulaiTampil;
     
         

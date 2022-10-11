@@ -1,6 +1,8 @@
 package apap.singidol.model;
 
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -39,11 +41,16 @@ public class TipeModel {
     @Column(name="nama") @NotNull
     private String nama;
 
-    @Column(name="deskripsi_tipe")
+    @Column(name="deskripsi_tipe") @NotNull
     private String deskripsiTipe;
 
     @OneToMany(mappedBy = "tipe")
     List<TiketModel> tiket;
+
+    public String formatCurrency(String amount) {
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+        return "Rp " +  formatter.format(Double.parseDouble(amount));
+    }
 
     @Override
     public String toString() {

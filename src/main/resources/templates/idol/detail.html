@@ -6,6 +6,7 @@
 
 <body>
 
+  <nav th:replace="fragments/fragment :: navbar(page='idol')"></nav>
     <div class="container container-fluid px-2 d-flex flex-column" style="margin-top: 50px;">
         <h3 class="font-weight-bold" th:text="'Detail Idol ' + ${idol.namaIdol}"></h3>
 

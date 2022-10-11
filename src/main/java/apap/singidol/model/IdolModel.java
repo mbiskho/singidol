@@ -52,6 +52,7 @@ public class IdolModel {
     public Integer jumlahAnggota;
 
     @Column(name="asal_negara") @Size(max = 255)
+    @NotNull
     public String asalNegara;   
     
     @OneToMany(mappedBy = "idol", fetch = FetchType.EAGER,cascade = CascadeType.ALL )

@@ -7,4 +7,5 @@ import java.util.*;
 public interface TipeService {
     List<TipeModel> findAllTipe();
     TipeModel findTipeById(Long id);
+    TipeModel findTipeByNama(String nama);
 }

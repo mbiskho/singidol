@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <title>Search Konser</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<body>
+
+
+    <nav th:replace="fragments/fragment :: navbar(page='konser')"></nav>
+    <div class="container container-fluid px-2 d-flex flex-column" style="margin-top: 50px;">
+        <p
+            style="font-weight: 700; font-size: 30px;"
+        >Cari Konser</p>
+
+        <form th:action="@{/konser/cari}" th:object="${searchKonserDto}" method="POST">
+            <p style="margin-bottom: 5px; font-weight: 500;">Pendapatan Minimal</p>
+                <input style="width: 300px; margin-bottom: 20px;"  type="text" required th:field="*{pendapatan}"/>
+            <br/>
+
+
+            <p style="margin-bottom: 5px; font-weight: 500;">Idol</p>
+            <select th:field="*{idIdol}" style="width:300px; height: 30px;">
+                <option 
+                    th:each="existingIdol : ${listIdol}"
+                    th:value="${existingIdol.id}" 
+                    th:text="${existingIdol.namaIdol}"
+                     ></option>
+            </select>
+
+            <br/>
+            <button class="btn btn-primary mt-4" type="submit" name="save">Cari</button>
+            <a class="btn btn-secondary mt-4 mx-2" href="/konser">Batal</a>
+
+        </form>
+    </div>
+
+</body>
+</html>

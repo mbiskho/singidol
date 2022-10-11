@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <body>
 
+  <nav th:replace="fragments/fragment :: navbar(page='konser')"></nav>
     <div class="container container-fluid px-2 d-flex flex-column" style="margin-top: 50px;">
         <p
             style="font-weight: 700; font-size: 30px;"
@@ -38,7 +39,7 @@
                             th:text="${existingIdol.namaIdol}"
                              ></option>
                     </select>
-                    <!-- <input style="width: 80px;"  type="time" required  th:field="*{tempat}" /> -->
+                    <input style="width: 80px;"  type="datetime-local" required  th:field="*{konserIdol[__${iteration.index}__].jamMulaiTampil}" />
 
                     <button class="btn btn-danger btn-sm" style="height: 30px; width:30px;" 
                             type="submit" 

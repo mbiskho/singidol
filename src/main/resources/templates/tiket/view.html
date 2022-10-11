@@ -6,6 +6,7 @@
 
 <body>
 
+  <nav th:replace="fragments/fragment :: navbar(page='tiket')"></nav>
     <div class="container container-fluid px-2 d-flex flex-column" style="margin-top: 50px;">
         <h2>Daftar Tiket</h2>
       
@@ -29,7 +30,9 @@
                 <td style="width: 180px;" th:text="${tiket.tipe.nama}"></td>
                 <td style="width: 300px;" class="d-flex justify-content-center">
                     <a type="button" class="btn btn-info btn-md text-white" style="margin-right: 20px;" th:href="@{/tiket/detail/} + ${tiket.id}">Detail</a>
-                    <a type="button" class="btn btn-danger btn-md text-white" style="margin: 0px;" th:href="@{/tiket/delete/} + ${tiket.id}">Hapus</a>
+                    <form th:action="@{/tiket/delete/} + ${tiket.id}"  method="POST">
+                      <button type="submit" class="btn btn-danger btn-md text-white" style="margin: 0px;" >Hapus</button>
+                    </form>
                 </td>
               </tr>
             </tbody>

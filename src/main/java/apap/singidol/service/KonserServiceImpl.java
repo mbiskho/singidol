@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import apap.singidol.dto.FrequentKonserDto;
 import apap.singidol.model.KonserModel;
 import apap.singidol.repository.KonserRepository;
 
@@ -11,6 +13,7 @@ import apap.singidol.repository.KonserRepository;
 public class KonserServiceImpl implements KonserService {
   @Autowired
   KonserRepository konserRepository;
+
 
 
     @Override
@@ -44,6 +47,21 @@ public class KonserServiceImpl implements KonserService {
         konserRepository.updateNamaKonser(konser.getNamaKonser(), konser.getId());
         konserRepository.updateTempatKonser(konser.getTempat(), konser.getId());
         konserRepository.updateWaktuKonser(konser.getWaktu(), konser.getId());
+    }
+
+    @Override
+    public List<KonserModel> findKonserByPendapatanAndIdol(Long pendapatan, Long idIdol){
+        List<KonserModel> listKonser = konserRepository.searchKonserByPendapatanAndIdol(idIdol, pendapatan);
+
+        return listKonser;
+    }
+
+    @Override
+    public KonserModel findMostFrequent(Long idTipe){
+        
+        KonserModel konser = konserRepository.findMostFrequentConcertByTipeId(idTipe);
+        
+        return konser;
     }
 
 }

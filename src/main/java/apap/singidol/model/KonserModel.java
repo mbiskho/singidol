@@ -1,5 +1,6 @@
 package apap.singidol.model;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -52,6 +53,7 @@ public class KonserModel {
     private Long totalPendapatan;
 
     @Column(name="tempat") @Size(max = 255)
+    @NotNull
     private String tempat;
 
     @OneToMany(mappedBy = "konser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -74,6 +76,10 @@ public class KonserModel {
         return waktuParse;
     }
 
+    public String formatCurrency(String amount) {
+        DecimalFormat formatter = new DecimalFormat("###,###,###");
+        return  "Rp " + formatter.format(Double.parseDouble(amount));
+    }
 
     @Override
     public String toString() {

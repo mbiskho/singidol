@@ -23,4 +23,10 @@ public class TipeServiceImpl implements TipeService {
     public TipeModel findTipeById(Long id){
         return tipeRepository.getReferenceById(id);
     }
+
+    @Override
+    public TipeModel findTipeByNama(String nama){
+        TipeModel tipe = tipeRepository.findTipeByName(nama);
+        return tipe;
+    }
 }
